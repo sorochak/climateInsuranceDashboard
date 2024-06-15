@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { Container, Box, Typography } from "@mui/material";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { Container, Box, Typography } from '@mui/material';
 
 function App() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios
-      .post("http://localhost:5000/adjust", {
-        // include any required POST data here
-      })
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error("There was an error!", error);
-      });
+    const postYlt = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:5000/adjust', {
+          method: 'POST',
+          body: JSON.stringify({ key: 'value' }),
+        });
+
+        const yltAdjusted = await response.json();
+        console.log('yltAdjusted: ', yltAdjusted);
+      } catch (err) {
+        console.error('Post YLT Error: ', err);
+      }
+    };
+
+    postYlt();
   }, []);
 
   console.log(data);
