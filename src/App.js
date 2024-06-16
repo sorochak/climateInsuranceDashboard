@@ -1,3 +1,4 @@
+import Dashboard from './components/Dashboard';
 import React, { useState } from "react";
 import Header from "./components/Header";
 import { Container, Box, Button, CircularProgress } from "@mui/material";
