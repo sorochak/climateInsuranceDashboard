@@ -10,11 +10,11 @@ import {
 import reaskLogo from "../static/reaskLogo.webp";
 
 function Header() {
-  const theme = useTheme(); // Use this for accessing theme specifics if needed
+  const theme = useTheme();
 
   return (
     <Box>
-      <AppBar color="default" sx={{ backgroundColor: theme.palette.grey[300] }}>
+      <AppBar color="default" sx={{ backgroundColor: "#E0E0E0" }}>
         <Container maxWidth="lg">
           <Toolbar>
             <Box

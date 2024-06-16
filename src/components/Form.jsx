@@ -1,153 +1,95 @@
-import Button from '@mui/material/Button';
-import FormControl from '@mui/material/FormControl';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import TextField from '@mui/material/TextField';
-import React, { useState } from 'react';
-import './Form.css';
-import TransitionModal from './TransitionModal';
+import React, { useState } from "react";
+import {
+  Button,
+  FormControl,
+  MenuItem,
+  Select,
+  Box,
+  Typography,
+  InputLabel,
+} from "@mui/material";
+import TransitionModal from "./TransitionModal";
+import YearPicker from "./YearPicker";
 
-const Form = () => {
-  const [file, setFile] = useState('');
+const Form = ({ fetchData, fetchingData }) => {
+  const [file, setFile] = useState("");
   const [formData, setFormData] = useState({
-    targetKind: 'FCT',
-    baselineYearFrom: '',
-    baselineYearTo: '',
-    targetYearFrom: '',
-    targetYearTo: '',
+    targetKind: "FCT",
+    baselineYearFrom: null,
+    baselineYearTo: null,
+    targetYearFrom: null,
+    targetYearTo: null,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleYearChange = (newYear, fieldName) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [fieldName]: newYear,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    formData['file'] = file;
-
-    try {
-      const response = await fetch('http://127.0.0.1:5000/adjust', {
-        method: 'POST',
-        body: JSON.stringify(formData),
-      });
-
-      const yltAdjusted = await response.json();
-      console.log('yltAdjusted: ', yltAdjusted);
-    } catch (err) {
-      console.error('Post YLT Error: ', err);
-    }
+    formData["file"] = file;
+    fetchData(formData);
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
-      <div className="form-input-container">
-        <div>
-          <label className="input-label" htmlFor="ylt-file">
-            YLT File
-          </label>
-          <TransitionModal id="ylt-file" file={file} setFile={setFile} />
-        </div>
+    <Box component="form" onSubmit={handleSubmit} sx={{ p: 3 }}>
+      <Typography variant="h6">File Upload</Typography>
+      <TransitionModal id="ylt-file" file={file} setFile={setFile} />
 
-        {/* Target Kind */}
-        <div>
-          <label htmlFor="target-kind">Target Kind</label>
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <Select
-              id="target-kind"
-              name="targetKind"
-              onChange={handleChange}
-              value={formData.targetKind}
-              displayEmpty
-              inputProps={{ 'aria-label': 'Without label' }}
-              style={{
-                background: 'white',
-                boxShadow: '10px 10px 20px rgba(0, 0, 0, 0.2)',
-                borderRadius: '10px',
-              }}
-            >
-              <MenuItem value="FCT">FCT</MenuItem>
-              <MenuItem value="CLIMATO">CLIMATO</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
+      <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", my: 2 }}>
+        <FormControl sx={{ width: 150 }}>
+          <InputLabel id="target-kind-label">Target Kind</InputLabel>{" "}
+          {/* Label for the select */}
+          <Select
+            labelId="target-kind-label" // This id links the label to the select
+            id="target-kind"
+            value={formData.targetKind}
+            onChange={handleChange}
+            label="Target Kind" // This is necessary for proper spacing and floating label behavior
+          >
+            <MenuItem value="FCT">FCT</MenuItem>
+            <MenuItem value="CLIMATO">CLIMATO</MenuItem>
+          </Select>
+        </FormControl>
+        <YearPicker
+          label="Baseline Year From"
+          value={formData.baselineYearFrom}
+          onChange={(newYear) => handleYearChange(newYear, "baselineYearFrom")}
+        />
+        <YearPicker
+          label="Baseline Year To"
+          value={formData.baselineYearTo}
+          onChange={(newYear) => handleYearChange(newYear, "baselineYearTo")}
+        />
+        <YearPicker
+          label="Target Year From"
+          value={formData.targetYearFrom}
+          onChange={(newYear) => handleYearChange(newYear, "targetYearFrom")}
+        />
+        <YearPicker
+          label="Target Year To"
+          value={formData.targetYearTo}
+          onChange={(newYear) => handleYearChange(newYear, "targetYearTo")}
+        />
+      </Box>
 
-        <div className="input-baseline-target-years">
-          {/* Baseline Years */}
-          <div>
-            <label>Select Baseline Years (Optional)</label>
-            <div>
-              <TextField
-                hiddenLabel
-                type="number"
-                name="baselineYearFrom"
-                onChange={handleChange}
-                value={formData.baselineYearFrom}
-                style={{
-                  background: 'white',
-                  boxShadow: '10px 10px 20px rgba(0, 0, 0, 0.2)',
-                  borderRadius: '10px',
-                }}
-                placeholder="2022"
-              />
-              <TextField
-                hiddenLabel
-                type="number"
-                name="baselineYearTo"
-                onChange={handleChange}
-                value={formData.baselineYearTo}
-                style={{
-                  background: 'white',
-                  boxShadow: '10px 10px 20px rgba(0, 0, 0, 0.2)',
-                  borderRadius: '10px',
-                }}
-                placeholder="None"
-              />
-            </div>
-          </div>
-
-          {/* Target Years */}
-          <div>
-            <label>Select Target Years (Optional)</label>
-            <div>
-              <TextField
-                hiddenLabel
-                type="number"
-                name="targetYearFrom"
-                onChange={handleChange}
-                value={formData.targetYearFrom}
-                placeholder="2022"
-                style={{
-                  background: 'white',
-                  boxShadow: '10px 10px 20px rgba(0, 0, 0, 0.2)',
-                  borderRadius: '10px',
-                }}
-              />
-              <TextField
-                hiddenLabel
-                type="number"
-                name="targetYearTo"
-                onChange={handleChange}
-                value={formData.targetYearTo}
-                placeholder="None"
-                style={{
-                  background: 'white',
-                  boxShadow: '10px 10px 20px rgba(0, 0, 0, 0.2)',
-                  borderRadius: '10px',
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <Button variant="contained" type="submit">
-        Submit
+      <Button
+        variant="contained"
+        type="submit"
+        disabled={fetchingData}
+        sx={{ mt: 2, width: "140px" }}
+      >
+        {fetchingData ? "Processing" : "Submit"}
       </Button>
-    </form>
+    </Box>
   );
 };
 

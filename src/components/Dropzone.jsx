@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDropzone } from 'react-dropzone';
+import React from "react";
+import { useDropzone } from "react-dropzone";
 
 function Dropzone({ file, setFile }) {
   const onDrop = (selectedFiles) => {
@@ -8,7 +8,7 @@ function Dropzone({ file, setFile }) {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { 'text/csv': ['.csv'] },
+    accept: { "text/csv": [".csv"] },
     maxFiles: 1,
   });
 
