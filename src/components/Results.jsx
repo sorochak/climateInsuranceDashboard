@@ -17,8 +17,6 @@ function Results({ data }) {
   const [imageUrls, setImageUrls] = useState({});
   const fetchedRef = useRef(false); // Ref to track if data has been fetched
 
-  console.log("Data received in Results:", data);
-
   useEffect(() => {
     if (!fetchedRef.current) {
       const imageNames = ["ep.png", "freq_ratios.png", "summary_stats.png"];
@@ -86,7 +84,6 @@ function Results({ data }) {
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                       <TableRow>
-                        <TableCell>Sample</TableCell>
                         <TableCell>Event_ID</TableCell>
                         <TableCell align="right">Gate</TableCell>
                         <TableCell align="right">Category</TableCell>
@@ -101,9 +98,6 @@ function Results({ data }) {
                             "&:last-child td, &:last-child th": { border: 0 },
                           }}
                         >
-                          <TableCell component="th" scope="row">
-                            {index + 1}
-                          </TableCell>
                           <TableCell>{row.event_id}</TableCell>
                           <TableCell align="right">{row.gate}</TableCell>
                           <TableCell align="right">{row.category}</TableCell>
