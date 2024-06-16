@@ -6,32 +6,34 @@ import Results from "./components/Results";
 function App() {
   const [data, setData] = useState([]);
 
-  // useEffect(() => {
-  //   const postYlt = async () => {
-  //     try {
-  //       const response = await fetch("http://127.0.0.1:5000/adjust", {
-  //         method: "POST",
-  //         body: JSON.stringify({ key: "value" }),
-  //       });
+  useEffect(() => {
+    const postYlt = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:5000/adjust", {
+          method: "POST",
+          body: JSON.stringify({ key: "value" }),
+        });
 
-  //       const yltAdjusted = await response.json();
-  //       console.log("yltAdjusted: ", yltAdjusted);
-  //     } catch (err) {
-  //       console.error("Post YLT Error: ", err);
-  //     }
-  //   };
+        console.log("response: ", response);
+        const yltAdjusted = await response.json();
+        setData(yltAdjusted);
+        console.log("yltAdjusted: ", yltAdjusted);
+      } catch (err) {
+        console.error("Post YLT Error: ", err);
+      }
+    };
 
-  //   postYlt();
-  // }, []);
+    postYlt();
+  }, []);
 
-  console.log(data);
+  console.log(JSON.stringify(data));
 
   return (
     <>
       <Header />
       <Container maxWidth="md">
         <Box>
-          <Results />
+          <Results data={data} />
         </Box>
       </Container>
     </>
