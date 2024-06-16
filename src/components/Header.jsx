@@ -13,12 +13,8 @@ function Header() {
   const theme = useTheme(); // Use this for accessing theme specifics if needed
 
   return (
-    <Box sx={{ position: "relative" }}>
-      <AppBar
-        position="absolute"
-        color="default"
-        sx={{ backgroundColor: theme.palette.grey[300] }}
-      >
+    <Box>
+      <AppBar color="default" sx={{ backgroundColor: theme.palette.grey[300] }}>
         <Container maxWidth="lg">
           <Toolbar>
             <Box
@@ -27,11 +23,17 @@ function Header() {
                 mt: "4px",
               }}
             >
-              <img
-                src={reaskLogo} // Use the imported variable here
-                alt="Reask Logo"
-                style={{ height: "3rem", width: "auto" }}
-              />
+              <a
+                href="https://reask.earth/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src={reaskLogo} // Use the imported variable here
+                  alt="Reask Logo"
+                  style={{ height: "3rem", width: "auto" }}
+                />
+              </a>
             </Box>
             <Typography
               variant="h5"

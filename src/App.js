@@ -31,9 +31,6 @@ function App() {
       <Header />
       <Container maxWidth="md">
         <Box>
-          <Typography variant="h4" align="center">
-            Climate Resilient Property Dashboard
-          </Typography>
           <Results />
         </Box>
       </Container>

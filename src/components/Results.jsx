@@ -28,7 +28,7 @@ function Results() {
   }, []);
 
   return (
-    <Container sx={{ mt: 8 }}>
+    <Container sx={{ mt: 13 }}>
       <Grid container spacing={2} justifyContent="center">
         {Object.keys(imageUrls).length > 0 && (
           <>
