@@ -34,7 +34,7 @@ function Header() {
               />
             </Box>
             <Typography
-              variant="h4"
+              variant="h5"
               component="div"
               sx={{ flexGrow: 1, textAlign: "center" }}
             >

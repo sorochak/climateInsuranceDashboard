@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Container,
-  Grid,
-  Card,
-  CardMedia,
-  Typography,
-  Box,
-} from "@mui/material";
+import { Container, Grid, Typography, Box } from "@mui/material";
 
 function Results() {
   const [imageUrls, setImageUrls] = useState({});
@@ -35,10 +28,7 @@ function Results() {
   }, []);
 
   return (
-    <Container sx={{ mt: 4 }}>
-      <Typography variant="h4" align="center" gutterBottom>
-        Climate Data Visualizations
-      </Typography>
+    <Container sx={{ mt: 8 }}>
       <Grid container spacing={2} justifyContent="center">
         {Object.keys(imageUrls).length > 0 && (
           <>
@@ -58,17 +48,17 @@ function Results() {
                 <img
                   src={imageUrls.summary_stats}
                   alt="Average Annual Loss"
-                  height="auto"
+                  height="400"
                   style={{
-                    marginLeft: "-15rem",
+                    marginLeft: "-12rem",
                   }}
                 />
                 <img
                   src={imageUrls.ep}
                   alt="Loss Exceedance Probability"
-                  height="auto"
+                  height="400"
                   style={{
-                    marginLeft: "-15rem",
+                    marginLeft: "-12rem",
                   }}
                 />
               </Box>
